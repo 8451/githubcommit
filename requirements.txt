@@ -1,2 +1,3 @@
+ipython==5.7.0
 notebook
 gitpython
