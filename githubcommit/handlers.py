@@ -71,7 +71,7 @@ class GitCommitHandler(IPythonHandler):
         # push changes
         try:
             pushed = remote.push(git_branch)
-            assert len(pushed)>0
+            #assert len(pushed)>0
             #assert pushed[0].flags in [git.remote.PushInfo.UP_TO_DATE, git.remote.PushInfo.FAST_FORWARD, git.remote.PushInfo.NEW_HEAD, git.remote.PushInfo.NEW_TAG]
         except GitCommandError as e:
             print(e)
