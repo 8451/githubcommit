@@ -50,6 +50,25 @@ export GIT_USER_UPSTREAM=sat28 <br />
 
 ![Success Message](screens/success.png?raw=true "Success Message")
 
+## Development
+### Packaging:
+The most important file for packaging is "setup.py" which exists at the root of the project directory. 
+
+“setup.py” serves two primary functions:
+- It’s the file where various aspects of the project are configured. The primary feature of setup.py is that it contains a global setup() function. The keyword arguments to this function are how specific details of your project are defined. 
+- It’s the command line interface for running various commands that relate to packaging tasks. To get a listing of available commands, run python setup.py --help-commands.
+
+### Versioning Scheme:
+We are following the semantic versioning schema for this project as it is recommended in the PyPA user guide.
+This is a 3-part numbering scheme:  MAJOR.MINOR.MAINTENANCE
+1. MAJOR version when you make incompatible API changes,
+2. MINOR version when you add functionality in a backwards-compatible manner, and
+3. MAINTENANCE version when you make backwards-compatible bug fixes.
+
+Make sure the version is updated in setup.py each time you make a code change.
+
+*Important Note*: Make sure that versioning is consistent with each deployment. For example, if you choose to version it as 0.1.2 make sure it is always versioned in only numbers. If you choose to version it as 0.1.2.a1 make sure it is always versioned in that format.  
+
 ## Credits
 
 Thanks to https://github.com/Lab41/sunny-side-up for laying the foundation of this extension.
