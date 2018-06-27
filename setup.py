@@ -8,7 +8,6 @@ setuptools.setup(
     description="Jupyter extension to enable user push notebooks to a git repo",
     packages=setuptools.find_packages(),
     install_requires=[
-        'psutil',
         'notebook',
         'gitpython'
     ],
