@@ -37,6 +37,7 @@ jupyter nbextension enable --py githubcommit
 export GIT_PARENT_DIR=~ <br />
 export GIT_REPO_NAME=gitjupyter <br />
 export GIT_BRANCH_NAME=master <br />
+export GIT_REMOTE_NAME=origin
 export GIT_USER=sat28 <br />
 export GIT_EMAIL=anand.shaleen@gmail.com <br />
 export GITHUB_ACCESS_TOKEN=#access-token from github developer settings <br />

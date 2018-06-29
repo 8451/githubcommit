@@ -22,8 +22,11 @@ class GitCommitHandler(IPythonHandler):
         git_url = os.path.expandvars(os.environ.get('GIT_REMOTE_URL'))
         git_user = os.path.expandvars(os.environ.get('GIT_USER'))
         git_repo_upstream = os.path.expandvars(os.environ.get('GIT_REMOTE_UPSTREAM'))
-        git_branch = git_remote = os.path.expandvars(os.environ.get('GIT_BRANCH_NAME'))
+        git_branch = os.path.expandvars(os.environ.get('GIT_BRANCH_NAME'))
+        git_remote = os.path.expandvars(os.environ.get('GIT_REMOTE_NAME'))
         git_access_token = os.path.expandvars(os.environ.get('GITHUB_ACCESS_TOKEN'))
+        if not git_remote:
+            git_remote = "origin"
 
         # get the parent directory for git operations
         git_dir_parent = os.path.dirname(git_dir)
@@ -71,8 +74,8 @@ class GitCommitHandler(IPythonHandler):
         # push changes
         try:
             pushed = remote.push(git_branch)
-            #assert len(pushed)>0
-            #assert pushed[0].flags in [git.remote.PushInfo.UP_TO_DATE, git.remote.PushInfo.FAST_FORWARD, git.remote.PushInfo.NEW_HEAD, git.remote.PushInfo.NEW_TAG]
+            assert len(pushed)>0
+            assert pushed[0].flags in [git.remote.PushInfo.UP_TO_DATE, git.remote.PushInfo.FAST_FORWARD, git.remote.PushInfo.NEW_HEAD, git.remote.PushInfo.NEW_TAG]
         except GitCommandError as e:
             print(e)
             self.error_and_return(cwd, "Could not push to remote {}".format(git_remote))
@@ -82,20 +85,20 @@ class GitCommitHandler(IPythonHandler):
             return
 
         # open pull request
-        try:
-          github_url = "https://api.github.com/repos/{}/pulls".format(git_repo_upstream)
-          github_pr = {
-              "title":"{} Notebooks".format(git_user),
-              "body":"IPython notebooks submitted by {}".format(git_user),
-              "head":"{}:{}".format(git_user, git_remote),
-              "base":"master"
-          }
-          github_headers = {"Authorization": "token {}".format(git_access_token)}
-          r = requests.post(github_url, data=json.dumps(github_pr), headers=github_headers)
-          if r.status_code != 201:
-            print("Error submitting Pull Request to {}".format(git_repo_upstream))
-        except:
-            print("Error submitting Pull Request to {}".format(git_repo_upstream))
+        # try:
+        #   github_url = "https://api.github.com/repos/{}/pulls".format(git_repo_upstream)
+        #   github_pr = {
+        #       "title":"{} Notebooks".format(git_user),
+        #       "body":"IPython notebooks submitted by {}".format(git_user),
+        #       "head":"{}:{}".format(git_user, git_remote),
+        #       "base":"master"
+        #   }
+        #   github_headers = {"Authorization": "token {}".format(git_access_token)}
+        #   r = requests.post(github_url, data=json.dumps(github_pr), headers=github_headers)
+        #   if r.status_code != 201:
+        #     print("Error submitting Pull Request to {}".format(git_repo_upstream))
+        # except:
+        #     print("Error submitting Pull Request to {}".format(git_repo_upstream))
 
         # return to directory
         os.chdir(cwd)
