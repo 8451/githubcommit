@@ -1,4 +1,7 @@
 ipython==5.7.0
 notebook
 gitpython
+teamcity-messages
+coverage
+wheel
 bumpversion
